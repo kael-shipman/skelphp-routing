@@ -2,12 +2,14 @@
 namespace Skel;
 
 class Route implements Interfaces\Route {
+  protected $name;
   protected $pattern;
   protected $handler;
   protected $callback;
   protected $method;
 
-  public function __construct(string $pattern, $handler, string $callback, string $method=null) {
+  public function __construct(string $pattern, $handler, string $callback, string $method=null, string $name=null) {
+    $this->name = $name;
     $this->pattern = $pattern;
     $this->handler = $handler;
     $this->callback = $callback;
@@ -18,6 +20,8 @@ class Route implements Interfaces\Route {
     $callback = $this->callback;
     return $this->handler->$callback($vars);
   }
+
+  public function getName() { return $this->name; }
 
   public function getPath(array $vars) {
     $pattern_parts = explode('/', trim($this->pattern, '/'));
@@ -91,4 +95,6 @@ class Route implements Interfaces\Route {
 
     return $vars;
   }
+
+  public function setName($name) { $this->name = $name; }
 }
