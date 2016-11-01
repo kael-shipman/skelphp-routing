@@ -1,7 +1,7 @@
 <?php
 namespace Skel;
 
-abstract class Router implements Interfaces\Router {
+class Router implements Interfaces\Router {
   protected $routes = array();
   protected $activeRoute = null;
 

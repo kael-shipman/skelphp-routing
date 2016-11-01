@@ -7,6 +7,7 @@ class Route implements Interfaces\Route {
   protected $handler;
   protected $callback;
   protected $method;
+  protected $matchedVars;
 
   public function __construct(string $pattern, $handler, string $callback, string $method=null, string $name=null) {
     $this->name = $name;
@@ -49,6 +50,8 @@ class Route implements Interfaces\Route {
 
     return $path;
   }
+
+  public function getMatchedVars() { $this->matchedVars; }
 
   public function match(Interfaces\Request $r) {
     $uri = $r->getUri();
@@ -93,6 +96,7 @@ class Route implements Interfaces\Route {
     // If we've got path variables left over (and there wasn't a star), it's not a match
     if (isset($path_parts[$i])) return false;
 
+    $this->matchedVars = $vars;
     return $vars;
   }
 
