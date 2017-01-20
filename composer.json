@@ -1,5 +1,5 @@
 {
-  "name" : "skel/router",
+  "name" : "skel/routing",
   "description" : "A very basic routing package that provides both Routes and a Router for use in an routing a string to a specific piece of functionality.",
   "type" : "library",
   "keywords" : ["router", "routing", "request handling", "framework"],
