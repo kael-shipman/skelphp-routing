@@ -17,7 +17,7 @@ class Route implements Interfaces\Route {
     $this->method = $method;
   }
 
-  public function execute($vars = array()) {
+  public function execute(array $vars = array()) {
     $callback = $this->callback;
     return $this->handler->$callback($vars);
   }
@@ -62,13 +62,16 @@ class Route implements Interfaces\Route {
     $pattern = trim($this->pattern, '/');
 
     // Break into parts
-    $path_parts = explode('/',$path);
+    $path_parts = ($path == '' ? array() : explode('/',$path));
     $pattern_parts = explode('/', $pattern);
 
     $vars = array();
 
     // Check method match
-    if ($this->method != null && $this->method != $r->getMethod()) return false;
+    if ($this->method != null && strtolower($this->method) != strtolower($r->getMethod())) return false;
+
+    // Now check for literal match
+    if ($path == $pattern) return $path_parts;
 
     // Now check pattern against path
     for($i = 0; $i < count($pattern_parts); $i++) {
@@ -100,5 +103,5 @@ class Route implements Interfaces\Route {
     return $vars;
   }
 
-  public function setName($name) { $this->name = $name; }
+  public function setName(string $name) { $this->name = $name; }
 }
